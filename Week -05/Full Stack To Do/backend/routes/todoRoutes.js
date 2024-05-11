@@ -1,15 +1,18 @@
 const express = require("express");
 const { createToDo, updateToDo } = require("../types");
+const { toDo } = require("../db");
 const router = express.Router();
 
 router.use(express.json())
 
 
 // Get all the todos
-router.get('/todos', function(req, res){
+router.get('/todos', async function(req, res){
+
+    const todos = await toDo.find({});
 
     res.json({
-        msg: "Todos fetched successfully"
+        todos,
     })
 })
 
@@ -20,7 +23,7 @@ router.get('/todos', function(req, res){
 //     title: String,
 //     description: String
 // }
-router.post('/todo', function(req, res){
+router.post('/todo', async function(req, res){
 
    const createPayLoad = req.body;
    const parsedPayLoad = createToDo.safeParse(createPayLoad)
@@ -32,12 +35,23 @@ router.post('/todo', function(req, res){
         return;
     }
         // Put it in Mongo db
+        const createdToDo = await toDo.create({
+            title: parsedPayLoad.title,
+            description: parsedPayLoad.description,
+            completed: false
+        })
+
+        console.log('Created To do', createdToDo);
+
+        res.json({
+            message: "To Do created"
+        })
  
 
 });
 
 // Mark as completed
-router.put('/completed', function(req, res){
+router.put('/completed', async function(req, res){
 
     const payLoad = req.body
    const parsedPayLoad =  updateToDo.safeParse(payLoad);
@@ -49,6 +63,17 @@ router.put('/completed', function(req, res){
     }
    
         // Put it in mongodb
+        await toDo.updateOne({
+            _id: req.body.id
+        },
+        {
+            completed: true
+        }
+        )
+
+        res.json({
+            message: 'To do upated successfull with id '+req.body.id
+        })
     
     
 })
