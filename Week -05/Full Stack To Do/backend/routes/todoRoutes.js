@@ -14,6 +14,11 @@ router.get('/todos', function(req, res){
 
 // Add a new Todo
 
+// body:
+// {
+//     title: String,
+//     description: String
+// }
 router.post('/todo', function(req, res){
 
 });
