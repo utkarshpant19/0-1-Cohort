@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Basics</title>
+  </head>
+  <body>
+    <h1>To Do App</h1>
+
+    <div class="toDoContainer">
+      <input type="text" placeholder="Title" id="title" /><br /><br />
+      <input
+        type="text"
+        id="description"
+        placeholder="Description"
+      /><br /><br />
+      <!-- <button onclick="addToDo()">Add Item</button> -->
+    </div>
+    <div id="list-container"></div>
+
+    <script>
+      let id = 1;
+      function addToDo() {
+        const toDoContainer = document.getElementsByClassName("toDoContainer");
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        const listContainer = document.getElementById("list-container");
+
+        toDoContainer[0].appendChild(createChildDiv(title, description, id++));
+      }
+
+      function createChildDiv(title, description, id) {
+        const childDiv = document.createElement("div");
+        const titleChild = document.createElement("div");
+        titleChild.innerHTML = title;
+
+        const desChild = document.createElement("div");
+        desChild.innerHTML = description;
+
+        const btn = document.createElement("button");
+        btn.setAttribute("onclick", `markAsDone(${id})`);
+        btn.innerHTML = "Mark as Done";
+        childDiv.setAttribute("id", id);
+
+        childDiv.appendChild(titleChild);
+        childDiv.appendChild(desChild);
+        childDiv.appendChild(btn);
+
+        return childDiv;
+      }
+
+      function markAsDone(id) {
+        const toDoDiv = document.getElementById(id);
+        toDoDiv.children[2].innerHTML = "Done";
+      }
+
+      function updateToDoState(state) {
+        for (let i = 0; i < state.length; i++) {
+          const toDoContainer =
+            document.getElementsByClassName("toDoContainer");
+            toDoContainer.innerHTML = "";
+          toDoContainer[0].appendChild(
+            createChildDiv(state[i].title, state[i].description, state[i].id)
+          );
+        }
+      }
+      
+
+       async function getData(){
+
+        const response = await fetch("https://sum-server.100xdevs.com/todos");
+        const json = await response.json();
+        const data = json.todos;
+        updateToDoState(data);
+
+      }
+      getData();
+      
+    </script>
+  </body>
+</html>

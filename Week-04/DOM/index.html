@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add two numbers</title>
+  </head>
+
+  <body>
+    <script>
+      async function populateDiv() {
+        const firstNumber = document.getElementById("first").value;
+        const secondNumber = document.getElementById("second").value;
+        const finalSum = document.getElementById("finalSum");
+
+        if(firstNumber && secondNumber){
+            // const sum = +firstNumber + +secondNumber;
+        const response = await fetch("http://localhost:3002/getSum?num1="+firstNumber+"&num2="+secondNumber);
+        const sum = await response.text();
+        finalSum.innerHTML = sum;
+        }     
+        else{
+            finalSum.innerHTML =''
+        }   
+      }
+
+      let timeout;
+      function debouncedPopulateDiv(){
+
+        clearTimeout(timeout); 
+        timeout =setTimeout(() => {
+            populateDiv();
+        }, 1000);
+      }
+    </script>
+
+    <input
+      type="text"
+      id="first"
+      placeholder="Number 1"
+      oninput="debouncedPopulateDiv()"
+    />
+    <br />
+    <input
+      type="text"
+      oninput="debouncedPopulateDiv()"
+      id="second"
+      placeholder="Number 2"
+    />
+    <br />
+    <button>Calculate Sum</button>
+    <div id="finalSum"></div>
+  </body>
+</html>
