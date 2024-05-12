@@ -11,7 +11,7 @@
 
 const mongoose = require('mongoose');
 
-const MONGODB_URL ="mongodb+srv://utkarshpant1994:KfHsTyvVIrYtgG2g@cluster0.hep5gr7.mongodb.net/todos"
+const MONGODB_URL ="mongodb+srv://utkarshpant1994:KfHsTyvVIrYtgG2g@cluster0.hep5gr7.mongodb.net/todoapp"
  mongoose.connect(MONGODB_URL);
 
 
@@ -20,7 +20,10 @@ const MONGODB_URL ="mongodb+srv://utkarshpant1994:KfHsTyvVIrYtgG2g@cluster0.hep5
 const ToDoSchema = new mongoose.Schema({
     title: String, 
     description: String, 
-    completed: Boolean
+    completed: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const toDo = mongoose.model('todos', ToDoSchema);

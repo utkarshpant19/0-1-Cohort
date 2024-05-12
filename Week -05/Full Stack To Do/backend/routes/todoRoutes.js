@@ -26,7 +26,8 @@ router.get('/todos', async function(req, res){
 router.post('/todo', async function(req, res){
 
    const createPayLoad = req.body;
-   const parsedPayLoad = createToDo.safeParse(createPayLoad)
+   const parsedPayLoad = createToDo.safeParse(createPayLoad);
+   console.log('Parsed Payload ', parsedPayLoad);
 
     if(!parsedPayLoad.success){
         res.status(411).json({
@@ -35,10 +36,11 @@ router.post('/todo', async function(req, res){
         return;
     }
         // Put it in Mongo db
+
+        const {title, description} = parsedPayLoad.data;
         const createdToDo = await toDo.create({
-            title: parsedPayLoad.title,
-            description: parsedPayLoad.description,
-            completed: false
+            title,
+            description,
         })
 
         console.log('Created To do', createdToDo);
