@@ -8,32 +8,36 @@ function App() {
   // Wrap anyone that wants to use the teleported value, inside a Provider
   return (
    <div>
-    <CountContext.Provider value={count}>
-      <Count setCount={setCount}></Count>
+    <CountContext.Provider value={{
+      count,
+      setCount
+    }}>
+      <Count></Count>
     </CountContext.Provider>
       
    </div>
   )
 }
 
- function Count({setCount}){
+ function Count(){
   return <>
     <CountRenderer/>
-    <Buttons setCount={setCount}/>
+    <Buttons/>
   </>
  }
 
  function CountRenderer(){
 
-  const count = useContext(CountContext);
+  const {count} = useContext(CountContext);
 
   return <>
     <h2>{count}</h2>
   </>
  }
 
- function Buttons({setCount}){
-  const count = useContext(CountContext)
+ function Buttons(){
+  const {count, setCount} = useContext(CountContext)
+
   return (
     <>
     <button onClick={()=> setCount(count +1)}>Increase</button>
