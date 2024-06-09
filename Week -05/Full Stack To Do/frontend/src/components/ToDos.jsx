@@ -1,10 +1,18 @@
-
-export function ToDos(){
-
-
-    return <>
-    <h1>To Do Title</h1>
-    <p>To Do Description</p>
-    <button>Mark as completed</button>
-    </>
+export function ToDos(props) {
+    const todos = props.todos
+  return (
+    <div>
+      {todos.map(function (todo, idx) {
+        return (
+          <div key={idx}>
+            <h1>{todo.title}</h1>
+            <p>{todo.description}</p>
+            <button>
+              {todo.completed == true ? "Completed" : "Mark as Done"}
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
 }

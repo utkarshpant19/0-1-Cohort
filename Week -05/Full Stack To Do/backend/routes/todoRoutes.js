@@ -1,10 +1,10 @@
 const express = require("express");
 const { createToDo, updateToDo } = require("../types");
 const { toDo } = require("../db");
+
 const router = express.Router();
 
 router.use(express.json())
-
 
 // Get all the todos
 router.get('/todos', async function(req, res){
