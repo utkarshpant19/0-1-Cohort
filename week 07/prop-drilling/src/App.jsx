@@ -4,7 +4,7 @@ import CountContext from "./context";
 function App() {
 
   const [count, setCount] = useState(0);
-
+console.log('App Rendered');
   // Wrap anyone that wants to use the teleported value, inside a Provider
   return (
    <div>
@@ -20,6 +20,8 @@ function App() {
 }
 
  function Count(){
+
+  console.log('Count Rendered');
   return <>
     <CountRenderer/>
     <Buttons/>

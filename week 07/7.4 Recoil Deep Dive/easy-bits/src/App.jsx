@@ -7,8 +7,6 @@ import {
   totalCountSelector,
 } from "./store/atoms";
 
-import { useMemo } from "react";
-
 function App() {
   return (
     <>
