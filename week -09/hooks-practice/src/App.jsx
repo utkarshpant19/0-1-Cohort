@@ -1,76 +1,140 @@
 import { useEffect, useState } from 'react'
-import { Component } from 'react';
 import './App.css'
+import axios from 'axios'
+import { useIsOnline } from './hooks/useIsOnline';
+import { useMousePointer } from './hooks/useMousePointer';
+import { useInterval } from './hooks/useInterval';
+import { SearchBar } from './components/SearchBar';
+
+function useTodos(t){
+
+  const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+
+   const timeout =  setInterval(() => {
+      axios.get("http://localhost:3000/api/v1/todos")
+      .then(res => {
+        setLoading(false);
+        setTodos(res.data.todos);
+      })
+    }, t*1000);
+
+    return ()=>{
+      clearInterval(timeout);
+    }
+
+  }, [t]);
+
+  return {todos, loading};
+}
 
 function App() {
+  const {todos, loading} = useTodos(5); // Poll every 5 seconds
+  const [count, setCount]= useState(0);
 
-  const [render, setRender] = useState(true);
+  const onlineStatus = useIsOnline();
+  const mousePosition = useMousePointer();
+    useInterval(()=>{
+      setCount((c)=> c+1);
+    }, 1000);
 
-  useEffect(()=>{
+  if(!onlineStatus){
+    return <>
+    <h1>You're Offline</h1>
+    </>
+  }
 
-    setTimeout(() => {
-      setRender(false);
-    }, 5000);
-  }, [])
-
-  return (
+  return loading ? <div>Loading...</div> :  (
     <>
-      {/* { render ? <MyComponent/>: <div></div>} */}
-      { render ? <MyClassComponent/>: <div></div>}
-     
+      {/* {todos.map(todo => <Track key={todo._id} todo={todo} />)}
+      <h1>{'The mouse position is '+mousePosition.x +" "+mousePosition.y}</h1>
+      <h1>Timer is at {count}</h1> */}
+
+      <SearchBar/>
     </>
   )
 }
 
-function MyComponent (){
-
-  useEffect(()=>{
-
-    console.log('Component Mounted');
-
-    return ()=>{
-      console.log('Component Unmounted');
-    }
-  }, [])
-
-  return <>
- <p>From My Functional Component</p>
-  </>
+function Track({ todo }) {
+  return <div>
+    {todo.title}
+    <br />
+    {todo.description}
+  </div>
 }
 
-class MyClassComponent extends Component{
 
-  componentDidMount(){
-    console.log('Component mounted');
-  }
+// function App() {
 
-  componentWillUnmount(){
-    console.log('Component Unmounted');
-  }
+//   const [render, setRender] = useState(true);
 
-  constructor(props){
+//   useEffect(()=>{
 
-    super(props);
-    this.state = {
-      count: 0
-    }
-  }
+//     setTimeout(() => {
+//       setRender(false);
+//     }, 5000);
+//   }, [])
 
-  incrementCount =()=>{
-    this.setState({count: this.state.count +1})
-  } 
+//   return (
+//     <>
+//       {/* { render ? <MyComponent/>: <div></div>} */}
+//       { render ? <MyClassComponent/>: <div></div>}
+     
+//     </>
+//   )
+// }
 
-  render(){
+// function MyComponent (){
 
-    return (
-      <div>
-        <p>{this.state.count}</p>
-        <button onClick={this.incrementCount}>Increase</button>
-      </div>
-    )
+//   useEffect(()=>{
 
-  }
-}
+//     console.log('Component Mounted');
+
+//     return ()=>{
+//       console.log('Component Unmounted');
+//     }
+//   }, [])
+
+//   return <>
+//  <p>From My Functional Component</p>
+//   </>
+// }
+
+// class MyClassComponent extends Component{
+
+//   componentDidMount(){
+//     console.log('Component mounted');
+//   }
+
+//   componentWillUnmount(){
+//     console.log('Component Unmounted');
+//   }
+
+//   constructor(props){
+
+//     super(props);
+//     this.state = {
+//       count: 0
+//     }
+//   }
+
+//   incrementCount =()=>{
+//     this.setState({count: this.state.count +1})
+//   } 
+
+//   render(){
+
+//     return (
+//       <div>
+//         <p>{this.state.count}</p>
+//         <button onClick={this.incrementCount}>Increase</button>
+//       </div>
+//     )
+
+//   }
+// }
 
 
 
