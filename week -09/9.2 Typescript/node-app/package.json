@@ -1,0 +1,17 @@
+{
+  "name": "ts-intro",
+  "version": "1.0.0",
+  "description": "This is Harkirat's ts demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Utkarsh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}
