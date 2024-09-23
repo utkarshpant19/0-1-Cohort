@@ -40,46 +40,46 @@ getUser("utkarsh@gmail.com").then((user) => {
   console.log("User found ", user);
 });
 
-// async function createUsersTable() {
-//   try {
-//     await client.connect();
-//     // Create users Table
-//     // const result = await client.query(
-//     //   `
-//     //      CREATE TABLE users (
-//     //             id SERIAL PRIMARY KEY,
-//     //             username VARCHAR(50) UNIQUE NOT NULL,
-//     //             email VARCHAR(255) UNIQUE NOT NULL,
-//     //             password VARCHAR(255) NOT NULL,
-//     //             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-//     //         );
-//     //     `
-//     // );
-//     // console.log(result);
+async function createUsersTable() {
+  try {
+    await client.connect();
+    // Create users Table
+    const result = await client.query(
+      `
+         CREATE TABLE users (
+                id SERIAL PRIMARY KEY,
+                username VARCHAR(50) UNIQUE NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            );
+        `
+    );
+    console.log(result);
 
-//     //   const INSERT_QUERY =
-//     //     "INSERT INTO users (username, email, password) VALUES ('utkarsh_pant', 'utkarsh@gmail.com', 123456)";
-//     // const result = await client.query(INSERT_QUERY); // This insert query is prone to SQL Injection attack,
-//     // Dont directly put user entered fields into SQL query
+    //   const INSERT_QUERY =
+    //     "INSERT INTO users (username, email, password) VALUES ('utkarsh_pant', 'utkarsh@gmail.com', 123456)";
+    // const result = await client.query(INSERT_QUERY); // This insert query is prone to SQL Injection attack,
+    // Dont directly put user entered fields into SQL query
 
-//     const SECURE_INSERT_QUERY =
-//       "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)";
-//     const values = ["utkarsh_pant", "utkarsh@gmail.com", 123456];
+    // const SECURE_INSERT_QUERY =
+    //   "INSERT INTO users (username, email, password) VALUES ($1, $2, $3)";
+    // const values = ["utkarsh_pant", "utkarsh@gmail.com", 123456];
 
-//     const result = await client.query(SECURE_INSERT_QUERY, values);
-//     //   // const result = await client.query(SECURE_INSERT_QUERY, values);
+    // const result = await client.query(SECURE_INSERT_QUERY, values);
+    // //   // const result = await client.query(SECURE_INSERT_QUERY, values);
 
-//     console.log("Insertion Success ", result);
-//     // } catch (err) {
-//     //   console.error("Error during Insertion");
-//     // } finally {
-//     //   await client.end();
-//     // }
-//   } catch (err) {
-//     console.error("Error during insertion ", err);
-//   } finally {
-//     await client.end();
-//   }
-// }
+    // console.log("Insertion Success ", result);
+    // } catch (err) {
+    //   console.error("Error during Insertion");
+    // } finally {
+    //   await client.end();
+    // }
+  } catch (err) {
+    console.error("Error during insertion ", err);
+  } finally {
+    await client.end();
+  }
+}
 
-// createUsersTable();
+createUsersTable();
