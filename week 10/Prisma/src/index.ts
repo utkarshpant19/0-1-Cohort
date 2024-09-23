@@ -39,7 +39,9 @@ interface UpdateName {
   firstName: string;
   lastName: string;
 }
+
 // Comment by Branch 1
+// Comment by Branch 2
 
 async function updateUser(username: string, updateParams: UpdateName) {
   const user = await prisma.user.update({
