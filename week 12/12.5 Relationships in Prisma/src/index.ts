@@ -59,9 +59,9 @@ async function getTodosAndUserDetails(userId: number) {
   console.log(response);
 }
 
-// addTodo("Wake up at 6 AM", "Wake up and go for Run", 1);
+addTodo("Wake up at 6 AM", "Wake up and go for Run", 10);
 // getTodos(10);
-getTodosAndUserDetails(1);
+// getTodosAndUserDetails(10);
 
 // insertUser(
 //   "utkarsh_pant",
