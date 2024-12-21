@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "./db";
 
 export const createUser = async (
   username: string,
@@ -18,4 +17,12 @@ export const createUser = async (
   console.log("Created User ", response);
 };
 
-export default prisma;
+export const getUser = async (userId: number) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  return user;
+};

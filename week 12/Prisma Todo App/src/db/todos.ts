@@ -1,4 +1,5 @@
 import prisma from "./db";
+import { Todos } from "@prisma/client";
 
 export const createTodo = async (
   userId: number,
@@ -30,3 +31,14 @@ export const getAllTodos = async (userId: number) => {
     include: { todos: true },
   });
 };
+
+export const updateTodo = async (id: number, data: Partial<Todos>) => {
+  return prisma.todos.update({
+    where: {
+      id,
+    },
+    data,
+  });
+};
+
+export const deleteTodo = async (id: number) => {};
