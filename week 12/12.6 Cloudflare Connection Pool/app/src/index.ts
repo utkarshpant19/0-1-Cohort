@@ -24,12 +24,14 @@ export default {
 			datasourceUrl: env.DATABASE_URL,
 		}).$extends(withAccelerate());
 
-		prisma.user.create({
+		const response = await prisma.user.create({
 			data: {
 				email: 'utkarsh@gmail.com',
 				name: 'Utkarsh Pant',
 			},
 		});
+
+		console.log(JSON.stringify(response));
 
 		return new Response(`Request Method ${request.method}`);
 	},

@@ -3,9 +3,6 @@ name = "app"
 main = "src/index.ts"
 compatibility_date = "2024-12-18"
 compatibility_flags = ["nodejs_compat"]
-[vars]
-DATABASE_URL = "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMzBjMGYxMTEtMWFiMy00MjY4LWE3OTgtM2IxZDBjMDJhNzMyIiwidGVuYW50X2lkIjoiMTM1N2ZmMTU3MWY5ODcyZGQ1MjAxYWY1YWRjNTJjNGYzYmM5YjA3NDUyZjMxMGQwMDE2YTllNjdhZjE4ZWVjNSIsImludGVybmFsX3NlY3JldCI6IjIzYjRhYzJiLWQ3NGMtNDQ4NC04MDg4LTY3OWI5ODE1ZjU5MSJ9.rPHQAqc7Q7BqGco8feZ5lbhqBElg5101t1-QUuZWDq4"
-
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
