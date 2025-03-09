@@ -3,9 +3,12 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { StatusCode } from "../constants/statusCode";
 import { verify } from "hono/jwt";
-import z from "zod";
-import { blogSchema, userSchema } from "../model/schema.zod";
+// import { postBlog } from "../model/schema.zod";
 import { ServerMessage } from "../constants/server.message";
+import {
+  createBlogSchema,
+  updateBlogSchema,
+} from "@utkarsh_pant/medium-common";
 
 export const blogRoutes = new Hono<{
   Bindings: {
@@ -44,11 +47,13 @@ blogRoutes.post("/", async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
+  const authorId = c.get("userId");
   //
   const body = await c.req.json();
+  body.authorId = authorId;
 
   // Verify the body
-  const { success } = blogSchema.safeParse(body);
+  const { success } = createBlogSchema.safeParse(body);
 
   if (!success) {
     c.status(StatusCode.BAD_REQUEST);
@@ -58,7 +63,6 @@ blogRoutes.post("/", async (c) => {
   }
 
   console.log("Reqeust body ", body);
-  const authorId = c.get("userId");
 
   // Insert blog in db w.r.t. that user
   try {
@@ -89,6 +93,16 @@ blogRoutes.put("/", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  // Verify the body
+  const { success } = updateBlogSchema.safeParse(body);
+
+  if (!success) {
+    c.status(StatusCode.BAD_REQUEST);
+    return c.json({
+      msg: "Invalid Request",
+    });
+  }
 
   const id = body.id;
 

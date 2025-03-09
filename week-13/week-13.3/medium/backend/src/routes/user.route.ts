@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
 import { StatusCode } from "../constants/statusCode";
+import { ServerMessage } from "../constants/server.message";
+import { signUpSchema, signInSchema } from "@utkarsh_pant/medium-common";
 
 const userRoute = new Hono<{
   Bindings: {
@@ -17,6 +19,13 @@ userRoute.post("/signup", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+
+  const { success } = signUpSchema.safeParse(body);
+
+  if (!success) {
+    c.status(StatusCode.BAD_REQUEST);
+    return c.json({ msg: ServerMessage.INVALID_REQUEST });
+  }
 
   // If user is not present then creates a user with id
   // Add zod validation and hash the password
@@ -53,6 +62,13 @@ userRoute.post("/signin", async (c) => {
   // Get the body
 
   const body = await c.req.json();
+
+  const { success } = signInSchema.safeParse(body);
+
+  if (!success) {
+    c.status(StatusCode.BAD_REQUEST);
+    return c.json({ msg: ServerMessage.INVALID_REQUEST });
+  }
 
   const hashedPassword = body.password;
 
