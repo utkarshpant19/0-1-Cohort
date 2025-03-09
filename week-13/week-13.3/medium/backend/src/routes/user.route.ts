@@ -19,20 +19,30 @@ userRoute.post("/signup", async (c) => {
   const body = await c.req.json();
 
   // If user is not present then creates a user with id
-  const user = await prisma.user.create({
-    data: {
-      username: body.username,
-      password: body.password,
-      email: body.email,
-    },
-  });
+  // Add zod validation and hash the password
 
-  const jwtToken = await sign({ id: user.id }, c.env.SIGNATURE_KEY);
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: body.username,
+        password: body.password,
+        email: body.email,
+      },
+    });
 
-  return c.json({
-    msg: "User signed up successfully",
-    token: jwtToken,
-  });
+    const jwtToken = await sign({ id: user.id }, c.env.SIGNATURE_KEY);
+
+    return c.json({
+      msg: "User signed up successfully",
+      token: jwtToken,
+    });
+  } catch (err) {
+    console.log(err);
+    c.status(StatusCode.ALREADY_EXISTS);
+    return c.json({
+      msg: `Username already exists with ${body.email} `,
+    });
+  }
 });
 
 userRoute.post("/signin", async (c) => {

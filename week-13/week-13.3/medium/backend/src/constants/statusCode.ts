@@ -1,5 +1,7 @@
 export enum StatusCode {
-  "UNAUTHORIZED" = 403,
-  "SUCCESS" = 200,
-  "NOT FOUND" = 404,
+  UNAUTHORIZED = 403,
+  SUCCESS = 200,
+  NOT_FOUND = 404,
+  ALREADY_EXISTS = 409,
+  BAD_REQUEST = 400,
 }
