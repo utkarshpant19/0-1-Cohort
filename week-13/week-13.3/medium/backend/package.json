@@ -2,6 +2,7 @@
   "name": "backend",
   "scripts": {
     "dev": "wrangler dev",
+    "test": "wrangler dev --inspect",
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {

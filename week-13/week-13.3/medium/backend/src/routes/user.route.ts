@@ -20,7 +20,6 @@ userRoute.post("/signup", async (c) => {
 
   const body = await c.req.json();
   console.log("Request body ", body);
-
   const { success } = signUpSchema.safeParse(body);
 
   if (!success) {
