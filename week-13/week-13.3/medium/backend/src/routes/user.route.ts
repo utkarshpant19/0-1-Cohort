@@ -19,6 +19,7 @@ userRoute.post("/signup", async (c) => {
   }).$extends(withAccelerate());
 
   const body = await c.req.json();
+  console.log("Request body ", body);
 
   const { success } = signUpSchema.safeParse(body);
 
@@ -39,6 +40,8 @@ userRoute.post("/signup", async (c) => {
       },
     });
 
+    console.log("User created ", user);
+
     const jwtToken = await sign({ id: user.id }, c.env.SIGNATURE_KEY);
 
     return c.json({
@@ -49,6 +52,7 @@ userRoute.post("/signup", async (c) => {
     console.log(err);
     c.status(StatusCode.ALREADY_EXISTS);
     return c.json({
+      errCode: "err",
       msg: `Username already exists with ${body.email} `,
     });
   }
