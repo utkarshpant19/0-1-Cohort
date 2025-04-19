@@ -78,14 +78,15 @@ userRoute.post("/signin", async (c) => {
   const user = await prisma.user.findUnique({
     where: {
       email: body.email,
-      password: hashedPassword,
+      password: body.password,
     },
   });
 
   if (!user) {
     c.status(StatusCode.UNAUTHORIZED);
     return c.json({
-      msg: "User email is not registered",
+      // @ts-ignore.
+      msg: "Email ID or Password is incorrect ",
     });
   }
 
@@ -94,6 +95,7 @@ userRoute.post("/signin", async (c) => {
   const token = await sign({ id: user.id }, c.env.SIGNATURE_KEY);
   return c.json({
     token,
+    msg: "Signed in successfully",
   });
 });
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LabelledInput } from "./LabelledInput";
 import { useState } from "react";
 import { SignupSchema } from "@utkarsh_pant/medium-common";
@@ -14,6 +14,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function sendRequest() {
     console.log("Post inputs ", postInputs);
@@ -23,15 +24,23 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         `${BACKEND_URL}/api/v1/user/${type == "signup" ? "signup" : "signin"}`,
         postInputs
       );
-      setLoading(false);
       console.log("Response ", response);
+      const { token, msg } = response.data;
+      localStorage.setItem("authToken", `Bearer ${token}`);
+      toast(msg, {
+        type: "success",
+      });
+      setLoading(false);
+
+      navigate("/blogs");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setLoading(false);
 
-      console.log("Error message ", err.response.data.message);
+      console.log("Error message ", err.response.data);
 
       console.log(err);
-      toast(err.response.data.message, {
+      toast(err.response.data.msg, {
         type: "error",
       });
     }

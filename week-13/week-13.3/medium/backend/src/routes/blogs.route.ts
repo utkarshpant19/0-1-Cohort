@@ -40,6 +40,7 @@ blogRoutes.use("/*", async (c, next) => {
   }
 });
 
+// Add a blog
 blogRoutes.post("/", async (c) => {
   console.log("Blog post request");
 

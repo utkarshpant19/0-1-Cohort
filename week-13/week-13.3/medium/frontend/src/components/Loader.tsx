@@ -1,7 +1,7 @@
 export const Loader = () => {
   return (
     <>
-      <div className="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50">
+      <div className="flex items-center justify-center w-full h-screen border border-gray-200 rounded-lg bg-gray-50">
         <div role="status">
           <svg
             aria-hidden="true"

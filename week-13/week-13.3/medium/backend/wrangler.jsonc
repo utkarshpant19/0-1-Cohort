@@ -10,7 +10,7 @@
     "DATABASE_URL": "prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMDQ4ODgwYjItMDhlMi00Njc5LTkwNGMtY2MxMTZiNTRiMWMyIiwidGVuYW50X2lkIjoiNGEwMzc1YjQ3ZTIwZmVjMTk5MGNjNWRlYWVhYmY1ZGNkMTJkMGJmM2NlZDBlZjUwNmIxYTU5MTNhMDdmNjUzMCIsImludGVybmFsX3NlY3JldCI6IjQ2NmE1NGQ2LWY4OWYtNGI4MC1hMzIyLTQwZmNkYWUxNDgzZCJ9.XbUnnBBcClVwx-RzPWvQQDk80Cehcv2zdl7l6Sh4ld4",
     "SIGNATURE_KEY": "Utkarsh@123"
   },
-"upload_source_maps": true
+"upload_source_maps": true,
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",
@@ -37,4 +37,8 @@
   //   "enabled": true,
   //   "head_sampling_rate": 1
   // }
+  "observability": {
+    "enabled": false
+  }
+  
 }
